@@ -1,0 +1,60 @@
+<div class="lista-container">
+  <h1>Lista de Estudiantes</h1>
+  <button class="btn-new" (click)="abrirFormulario()">Nuevo Estudiante</button>
+
+  <p *ngIf="loading">Cargando estudiantes...</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+  <table *ngIf="!loading && estudiantes.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Carrera</th>
+        <th>Semestre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of estudiantes">
+        <td>{{ e.id }}</td>
+        <td>{{ e.nombre }}</td>
+        <td>{{ e.email }}</td>
+        <td>{{ e.carrera }}</td>
+        <td>{{ e.semestre }}</td>
+        <td>
+          <button class="btn-edit" (click)="abrirFormulario(e)">Editar</button>
+          <button class="btn-delete" (click)="eliminar(e.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && estudiantes.length === 0">No hay estudiantes registrados.</p>
+
+  <!-- FORMULARIO SIMPLE -->
+  <div class="modal" *ngIf="showForm">
+    <div class="modal-content">
+      <h2>{{ editMode ? 'Editar Estudiante' : 'Nuevo Estudiante' }}</h2>
+      <form (ngSubmit)="guardar()">
+        <label>Nombre</label>
+        <input [(ngModel)]="selected.nombre" name="nombre" required />
+
+        <label>Email</label>
+        <input [(ngModel)]="selected.email" name="email" type="email" required />
+
+        <label>Carrera</label>
+        <input [(ngModel)]="selected.carrera" name="carrera" required />
+
+        <label>Semestre</label>
+        <input [(ngModel)]="selected.semestre" name="semestre" type="number" min="1" required />
+
+        <div class="modal-buttons">
+          <button type="submit" class="btn-save">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
+          <button type="button" class="btn-cancel" (click)="cerrarFormulario()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
