@@ -17,6 +17,7 @@ export class ListaEstudiantes {
   showForm = false;
   editMode = false;
   selected: Estudiante = { id: 0, nombre: '', email: '', carrera: '', semestre: 1 };
+  correoDuplicado: boolean = false;
 
   constructor(private estudiantesService: EstudianteService) {
     this.cargarEstudiantes();
@@ -52,7 +53,21 @@ export class ListaEstudiantes {
     this.showForm = false;
   }
 
-  guardar() {
+  guardar(form: any) {
+    if (form.invalid) return;
+
+    this.correoDuplicado = false;
+    const existeCorreo = this.estudiantes.some(
+      e =>
+        e.email.toLowerCase() === this.selected.email.toLowerCase() &&
+        e.id !== this.selected.id
+    );
+
+    if (existeCorreo) {
+      this.correoDuplicado = true;    // <-- activar mensaje
+      return;                         // no enviar al backend
+    }
+
     if (this.editMode) {
       this.estudiantesService.actualizarEstudiante(this.selected).subscribe({
         next: () => {

@@ -177,3 +177,26 @@ tbody td {
 .btn-cancel:hover {
   background: #c9302c;
 }
+.error-msg {
+  color: #ff6b6b;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+input.ng-valid.ng-dirty,
+input.ng-valid.ng-touched {
+  border: 1px solid #4caf50;
+}
+input.ng-invalid.ng-touched,
+input.ng-invalid.ng-dirty {
+  border: 1px solid #ff4d4d;
+}
+
+.btn-save:active:not([disabled]) {
+  background-color: #1c5f8a;
+}
+.btn-save[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background-color: #95a5a6 !important;
+}
